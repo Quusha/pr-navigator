@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Справочник по плану развития контролируемых государством АО, ТОО и ГП: структура приложений, сроки, проверки увязки и автоматическая проверка выгрузки с портала по приказу МНЭ РК № 18">
+<title>Навигатор плана развития</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --surface2:#E9EDF0; --ink:#1B2430; --ink2:#4C5866; --muted:#7A8694;
+  --line:#D5DBE2; --accent:#0E6B60; --accent-ink:#FFFFFF; --accent-soft:#DCEFEB;
+  --warn:#A8701C; --warn-soft:#F6ECD8; --crit:#B03A3A; --crit-soft:#F6E1E1; --ok:#2F7D4F; --ok-soft:#DFF0E5;
+  --info:#3B5F8A; --info-soft:#E1E9F3;
+  --display:"PT Serif",Georgia,"Times New Roman",serif; --body:"PT Sans","Segoe UI",Arial,sans-serif; --mono:"PT Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13181D; --surface:#1B2229; --surface2:#242D36; --ink:#E7EBEF; --ink2:#B4BEC8; --muted:#7F8B98;
+  --line:#33404B; --accent:#4FB5A6; --accent-ink:#0F1A18; --accent-soft:#1E3A36;
+  --warn:#E0A64A; --warn-soft:#3A2E17; --crit:#E07070; --crit-soft:#3E2323; --ok:#6CC28C; --ok-soft:#1F3A2A;
+  --info:#8FB3DD; --info-soft:#1F2D3D;
+}}
+:root[data-theme="dark"]{
+  --bg:#13181D; --surface:#1B2229; --surface2:#242D36; --ink:#E7EBEF; --ink2:#B4BEC8; --muted:#7F8B98;
+  --line:#33404B; --accent:#4FB5A6; --accent-ink:#0F1A18; --accent-soft:#1E3A36;
+  --warn:#E0A64A; --warn-soft:#3A2E17; --crit:#E07070; --crit-soft:#3E2323; --ok:#6CC28C; --ok-soft:#1F3A2A;
+  --info:#8FB3DD; --info-soft:#1F2D3D;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;margin:0}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:0 48px;padding-inline:16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.topin{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between}
+.brand{font-family:var(--display);font-size:1.15rem;font-weight:700}
+.brand small{display:block;font-family:var(--body);font-weight:400;font-size:.78rem;color:var(--muted)}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap}
+nav.tabs button{background:none;border:1px solid transparent;border-radius:6px;padding:6px 12px;font:inherit;font-size:.92rem;color:var(--ink2);cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft);font-weight:700}
+nav.tabs button:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.view{padding-top:28px}
+h1{font-family:var(--display);font-size:clamp(1.7rem,3.2vw,2.4rem);line-height:1.15;margin:0 0 10px;text-wrap:balance}
+h2{font-family:var(--display);font-size:1.45rem;margin:32px 0 10px;text-wrap:balance}
+h3{font-family:var(--display);font-size:1.12rem;margin:0 0 6px}
+p{max-width:70ch;margin:0 0 12px}
+.lead{font-size:1.08rem;color:var(--ink2);max-width:72ch}
+.eyebrow{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.tile .num{font-family:var(--display);font-size:1.9rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.tile p{margin:6px 0 0;font-size:.95rem;color:var(--ink2)}
+.pill{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.pill.appr{background:var(--accent-soft);color:var(--accent)}
+.pill.calc{background:var(--info-soft);color:var(--info)}
+.pill.q{background:var(--warn-soft);color:var(--warn)}
+.pill.crit{background:var(--crit-soft);color:var(--crit)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pt{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+/* structure */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.toolbar input[type=search]{flex:1 1 240px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink2);border-radius:999px;padding:5px 12px;font:inherit;font-size:.86rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.app{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+.app summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 14px}
+.app summary::-webkit-details-marker{display:none}
+.app .no{font-family:var(--display);font-size:1.25rem;color:var(--accent);font-variant-numeric:tabular-nums}
+.app .no small{display:block;font-family:var(--body);font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+.app .ttl{font-weight:700}
+.app .sub{font-size:.88rem;color:var(--muted);font-weight:400}
+.app .body{border-top:1px solid var(--line);padding:14px 14px 16px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.app .body h4{margin:0 0 4px;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.app .body ul{margin:0;padding-left:18px;font-size:.95rem}
+.app .body li{margin-bottom:4px}
+.app .body .full{grid-column:1/-1;font-size:.92rem;color:var(--ink2)}
+/* timeline */
+.now{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin:14px 0 20px}
+.now .date{font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+.now ol{margin:8px 0 0;padding-left:20px}
+.now li{margin-bottom:4px}
+.now li b{font-variant-numeric:tabular-nums}
+.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);margin-left:8px}
+.tl li{position:relative;padding:0 0 18px 22px}
+.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.tl li.rep::before{border-color:var(--warn)}
+.tl li.mon::before{border-color:var(--info)}
+.tl .when{font-family:var(--mono);font-size:.85rem;color:var(--ink2)}
+.tl .what{font-weight:700}
+.tl .who{font-size:.9rem;color:var(--ink2)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--ink2);margin:8px 0 14px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);margin-right:5px;vertical-align:middle}
+.legend i.rep{border-color:var(--warn)} .legend i.mon{border-color:var(--info)}
+.stage{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0 20px}
+.stage .s{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.stage .s b{display:block;font-family:var(--display)}
+.stage .s span{font-size:.9rem;color:var(--ink2)}
+/* checks */
+.ck{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-bottom:8px;padding:10px 14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.ck input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent)}
+.ck label{cursor:pointer}
+.ck .t{font-weight:700}
+.ck .d{font-size:.92rem;color:var(--ink2)}
+.ck .f{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:3px}
+.ck.done .t{color:var(--muted);text-decoration:line-through}
+.prog{display:flex;align-items:center;gap:12px;margin:12px 0 16px;font-size:.92rem;color:var(--ink2)}
+.bar{flex:1;height:8px;background:var(--surface2);border-radius:999px;overflow:hidden;max-width:360px}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
+.grp{margin:22px 0 8px}
+/* faq */
+.faq{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+.faq summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--muted);font-weight:400}
+.faq[open] summary::after{content:"–"}
+.faq .a{padding:0 14px 14px;color:var(--ink2);font-size:.97rem}
+.faq .a p{max-width:80ch}
+.note{background:var(--warn-soft);border:1px solid transparent;border-radius:8px;padding:10px 14px;font-size:.92rem;color:var(--ink)}
+.small{font-size:.86rem;color:var(--muted)}
+.tblwrap{overflow-x:auto;margin:10px 0 16px}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.m{font-family:var(--mono);white-space:nowrap}
+.drop{border:2px dashed var(--line);border-radius:10px;padding:26px 18px;text-align:center;background:var(--surface);margin:16px 0}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.sum .s{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.sum .s b{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.sum .s.crit b{color:var(--crit)} .sum .s.warn b{color:var(--warn)} .sum .s.ok b{color:var(--ok)} .sum .s.info b{color:var(--info)}
+.sum .s span{font-size:.82rem;color:var(--ink2)}
+.find{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.find.crit{border-left-color:var(--crit)} .find.warn{border-left-color:var(--warn)} .find.ok{border-left-color:var(--ok)} .find.info{border-left-color:var(--info)}
+.find .h{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px}
+.find .h b{font-family:var(--display)}
+.find p{margin:0;font-size:.95rem;color:var(--ink2);max-width:90ch}
+.find .fx{margin-top:6px;font-size:.88rem;color:var(--ink)}
+.find .fx::before{content:"Как исправить: ";font-weight:700}
+.meta{font-family:var(--mono);font-size:.82rem;color:var(--muted);margin:8px 0 4px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:.85rem;color:var(--muted)}
+@media (max-width:640px){ .app summary{grid-template-columns:52px 1fr} .app summary .pill{grid-column:2} }
+@media (prefers-reduced-motion:no-preference){ .bar i{transition:width .3s} }
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<header class="top"><div class="topin">
+  <div class="brand">Навигатор плана развития<small>приказ ЗПМ – МНЭ РК от 30.04.2025 № 18 · контролируемые государством АО, ТОО, ГП</small></div>
+  <nav class="tabs" role="tablist" aria-label="Разделы">
+    <button role="tab" aria-selected="true" data-v="home">Обзор</button>
+    <button role="tab" aria-selected="false" data-v="struct">Структура</button>
+    <button role="tab" aria-selected="false" data-v="time">Сроки</button>
+    <button role="tab" aria-selected="false" data-v="check">Проверки</button>
+    <button role="tab" aria-selected="false" data-v="audit">Проверить файл</button>
+    <button role="tab" aria-selected="false" data-v="faq">Вопросы</button>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<!-- ================= HOME ================= -->
+<section class="view" id="v-home">
+  <div class="eyebrow">Справочник для экономистов и плановиков квазигосударственного сектора</div>
+  <h1>Как устроен план развития и что от него требует приказ № 18</h1>
+  <p class="lead">Правила разработки, утверждения планов развития контролируемых государством АО, ТОО и государственных предприятий, мониторинга и оценки их реализации, а также разработки и представления отчётов по их исполнению. Здесь — структура документа по приложениям, календарь сроков, проверки увязки показателей и ответы на типовые вопросы. Всё со ссылками на пункты Правил.</p>
+  <div class="grid g3" style="margin-top:22px">
+    <div class="tile"><div class="num">15</div><h3>приложений утверждаются</h3><p>Прил. 1–15: паспорт, корпоративная структура, цели и КПД, программа реализации, показатели ФХД, дополнительные показатели — п. 12.</p></div>
+    <div class="tile"><div class="num">14</div><h3>приложений — расчёты</h3><p>Прил. 16–29 носят информативный характер и не являются предметом утверждения; корректируются исполнительным органом в рамках утверждённых агрегатов — п. 16.</p></div>
+    <div class="tile"><div class="num">2+1</div><h3>формы отчётности</h3><p>Прил. 30–31 — ежеквартально до 10 числа (п. 50); прил. 32 — информация для мониторинга органом управления (п. 53).</p></div>
+  </div>
+  <h2>Жизненный цикл документа</h2>
+  <div class="stage">
+    <div class="s"><b>1. Цели сверху</b><span>Уполномоченный орган отрасли — до 1 сентября, МИО — до 1 октября года, предшествующего планируемому периоду (п. 3–4).</span></div>
+    <div class="s"><b>2. План на 5 лет</b><span>Проект — органу утверждения не позднее 20 ноября; утверждение до 25 декабря (п. 16, 19). Разрабатывается один раз на пятилетку (п. 10).</span></div>
+    <div class="s"><b>3. Уточнения</b><span>Ежегодное — со второго года, те же сроки (п. 25–31). Полугодовое — по основаниям п. 34, не более двух раз в полугодие, до 25 июня / 25 декабря (п. 35, 37).</span></div>
+    <div class="s"><b>4. Отчёт за год</b><span>Без аудита — до 15 апреля, утверждение до 1 июня; с аудитом — 15 рабочих дней после утверждения аудированной отчётности, не позднее 1 сентября (п. 43, 46).</span></div>
+    <div class="s"><b>5. Реестр</b><span>ЭЦП + PDF решения органа утверждения через веб-портал реестра: 5 рабочих дней для плана и уточнений, 2 — для отчёта (п. 23, 32, 38, 47).</span></div>
+    <div class="s"><b>6. Мониторинг и оценка</b><span>Орган управления — отчёт о мониторинге до 10 октября (п. 52); совет директоров / наблюдательный совет — оценка до 1 декабря (п. 58–59).</span></div>
+  </div>
+  <h2>Три вещи, которые чаще всего ломают документ</h2>
+  <div class="grid g3">
+    <div class="tile"><span class="pill crit">Увязка</span><h3 style="margin-top:8px">Баланс и остатки</h3><p>Актив ≠ пассив в дальних годах, остаток денег на конец года ≠ остаток на начало следующего, прирост нераспределённого дохода ≠ чистая прибыль. Проверяется за минуту — раздел «Проверки».</p></div>
+    <div class="tile"><span class="pill crit">Горизонт</span><h3 style="margin-top:8px">Годы 3–5 не пересчитаны</h3><p>Расходы, ФОТ, себестоимость и ставки социальных платежей скопированы из первого года. Пункт 14 требует показателей с разбивкой по каждому году пятилетки, а не копии.</p></div>
+    <div class="tile"><span class="pill crit">Обоснование</span><h3 style="margin-top:8px">Записка про прошлое</h3><p>Пояснительная записка описывает факт отчётного года, а п. 13 требует обоснования плановых показателей и пояснений к каждому приложению; п. 37 — обоснования каждого уточнения.</p></div>
+  </div>
+  <p class="small" style="margin-top:18px">Справочник не заменяет текст Правил. Сверяйте формулировки с действующей редакцией в ИПС «Әділет» (G25NT000018, изменения 2026 г. — G26NT000006). Ставки социальных платежей и лимиты бюджета берите из актуальных НПА и писем администратора бюджетных программ.</p>
+</section>
+
+<!-- ================= STRUCTURE ================= -->
+<section class="view" id="v-struct" hidden>
+  <div class="eyebrow">Приложения 1–32 к Правилам</div>
+  <h1>Структура плана развития и отчёта</h1>
+  <p class="lead">Один и тот же набор форм используется для плана, ежегодного и полугодового уточнений и годового отчёта: меняется только заполняемая графа (утверждённый план → уточнение → корректировка → отчёт → отклонение). Откройте приложение, чтобы увидеть, что в нём заполняется и где обычно ошибаются.</p>
+  <div class="toolbar">
+    <input type="search" id="q-struct" placeholder="Поиск по приложениям: денежные средства, ФОТ, амортизация…" aria-label="Поиск по приложениям">
+    <button class="chip" data-f="all" aria-pressed="true">Все</button>
+    <button class="chip" data-f="appr" aria-pressed="false">Утверждаемые</button>
+    <button class="chip" data-f="calc" aria-pressed="false">Расчёты</button>
+    <button class="chip" data-f="q" aria-pressed="false">Квартальные / мониторинг</button>
+  </div>
+  <div id="applist"></div>
+  <h2>Графы одной формы: что в какую попадает</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Графа</th><th>Когда заполняется</th><th>Основание</th></tr>
+    <tr><td>Факт (год −2), Факт / оценка (год −1)</td><td>При разработке плана и каждом уточнении — по данным учёта; годы, предшествующие плановому, не корректируются</td><td class="m">п. 14</td></tr>
+    <tr><td>Утверждённый план</td><td>Значение, утверждённое до 25 декабря предшествующего года</td><td class="m">п. 19, 31</td></tr>
+    <tr><td>Уточнение в 1 / во 2 полугодии (до двух граф на полугодие)</td><td>Полугодовое уточнение по основаниям п. 34, не более двух раз в полугодие</td><td class="m">п. 34–37</td></tr>
+    <tr><td>Корректировка в апреле / августе / декабре</td><td>Только в расчётных приложениях 16–29: исполнительный орган меняет расчёты в рамках утверждённых агрегатов, без выхода на орган утверждения</td><td class="m">п. 16</td></tr>
+    <tr><td>Отчёт (оценка / факт)</td><td>Годовой отчёт: факт по аудированной или оперативной отчётности</td><td class="m">п. 40, 43, 49</td></tr>
+    <tr><td>Отклонение в % (факта от плана)</td><td>Считается порталом; причины отклонений раскрываются в пояснительной записке и учитываются при мониторинге</td><td class="m">п. 54</td></tr>
+  </table></div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section class="view" id="v-time" hidden>
+  <div class="eyebrow">Календарь по Правилам</div>
+  <h1>Сроки: что и когда должно быть сделано</h1>
+  <div class="now" id="now"></div>
+  <div class="legend"><span><i></i>план и уточнения</span><span><i class="rep"></i>отчёт</span><span><i class="mon"></i>мониторинг, оценка, реестр</span></div>
+  <ul class="tl" id="tl"></ul>
+  <h2>Сроки в рабочих днях (от события, а не от даты)</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Событие</th><th>Срок</th><th>Пункт</th></tr>
+    <tr><td>Орган утверждения рассматривает проект плана / уточнения</td><td>10 рабочих дней; доработка 5, повторное рассмотрение 5</td><td class="m">п. 18, 30</td></tr>
+    <tr><td>Орган утверждения рассматривает проект отчёта</td><td>5 рабочих дней; доработка 2, повторное рассмотрение 3</td><td class="m">п. 44–45</td></tr>
+    <tr><td>Утверждение полугодового уточнения</td><td>20 рабочих дней со дня внесения, но не позднее 25 июня / 25 декабря</td><td class="m">п. 37</td></tr>
+    <tr><td>Утверждение отчёта (с аудитом)</td><td>10 рабочих дней со дня внесения</td><td class="m">п. 46</td></tr>
+    <tr><td>Направление единому оператору после утверждения</td><td>План, уточнения — 5 рабочих дней; отчёт — 2 рабочих дня</td><td class="m">п. 23, 32, 38, 47</td></tr>
+    <tr><td>Ответ единого оператора (принят / отказ)</td><td>5 рабочих дней (план, уточнения); 2 рабочих дня (отчёт)</td><td class="m">п. 24, 33, 39, 48</td></tr>
+    <tr><td>Устранение замечаний оператора</td><td>5 рабочих дней (план, уточнения); 2 рабочих дня (отчёт)</td><td class="m">п. 24, 48</td></tr>
+    <tr><td>Обновление целей от органа управления при изменении его плана</td><td>15 рабочих дней</td><td class="m">п. 5–7</td></tr>
+    <tr><td>Вновь созданная организация: цели → план</td><td>Цели — 10 рабочих дней после госрегистрации; план — 20 рабочих дней после получения целей</td><td class="m">п. 21–22</td></tr>
+  </table></div>
+  <div class="note">Отказ единого оператора возможен только по двум основаниям: нет прикреплённого сканированного решения органа утверждения или ЭЦП не принадлежит организации (п. 24, 33, 48). Все остальные замечания — это замечания органа утверждения и органа управления на этапе рассмотрения.</div>
+</section>
+
+<!-- ================= CHECKS ================= -->
+<section class="view" id="v-check" hidden>
+  <div class="eyebrow">Перед внесением на орган утверждения</div>
+  <h1>Проверки увязки показателей</h1>
+  <p class="lead">Портал проверяет только арифметику внутри формы. Связи между приложениями и по годам остаются на совести разработчика — именно на них обычно спотыкаются на органе утверждения и при мониторинге. Отметки сохраняются в вашем браузере.</p>
+  <div class="prog"><span id="progtxt">0 из 0</span><div class="bar"><i id="progbar"></i></div><button class="chip" id="reset">Сбросить</button></div>
+  <div id="checks"></div>
+</section>
+
+<!-- ================= AUDIT ================= -->
+<section class="view" id="v-audit" hidden>
+  <div class="eyebrow">Автоматическая проверка выгрузки с портала</div>
+  <h1>Загрузите план — получите замечания</h1>
+  <p class="lead">Возьмите выгрузку плана развития, уточнения или отчёта с веб-портала реестра (файл .xls или .xlsx с листами Пр2…Пр31) и загрузите сюда. Навигатор прочитает приложения, проверит увязку показателей между формами и годами и сформулирует замечания так, как их напишет экономист органа утверждения. Файл обрабатывается в вашем браузере и никуда не отправляется.</p>
+  <div class="drop" id="drop">
+    <input type="file" id="file" accept=".xls,.xlsx" hidden>
+    <div><b>Перетащите файл сюда</b> или <button class="chip" id="pick" type="button">выберите на диске</button></div>
+    <div class="small" style="margin-top:6px">Ожидаются листы с именами вида «Пр6», «Пр16», «ПояснительнаяЗаписка» — так их называет портал при выгрузке.</div>
+  </div>
+  <div id="audit-out"></div>
+  <details class="faq" style="margin-top:22px"><summary>Что именно проверяется</summary><div class="a">
+    <p>Баланс: актив = пассив по каждому году, с попыткой объяснить расхождение (НМА, дочерние организации). Капитал: прирост нераспределённого дохода против чистой прибыли. Деньги: замыкание остатков между годами, тождество «начало + поступления − выбытия = конец», совпадение с балансом. Финансовый результат: доходы − расходы = прибыль. Основные средства: балансовая стоимость и неубывающая накопленная амортизация. Межформенные итоги: прил. 6 ↔ 7, 10, 18; 7 ↔ 19; 8 ↔ 20; 10 ↔ 24 + 27 + 28 + 29; 11 ↔ 22; 9 ↔ 21. Горизонт: совпадение дальних лет с утверждённым планом первого года. Ставки ОПВР и социальных отчислений по годам. Пропуски статей в отдельном году. Численность и ФОТ без динамики. Паспорт: ОПФ, землепользование при земельном налоге, реквизиты решения. Прил. 3 против строк «дочерних организаций». Прил. 11: инвестиционные проекты на плановые годы. Прил. 15 против доходов по вознаграждениям. Прил. 4: нумерация целей, показатели без плановых значений, пустые единицы измерения. Пояснительная записка: обрезанные тексты, описание только отчётного года.</p>
+  </div></details>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="view" id="v-faq" hidden>
+  <div class="eyebrow">Типовые вопросы</div>
+  <h1>Вопросы и ответы по Правилам</h1>
+  <div class="toolbar"><input type="search" id="q-faq" placeholder="Поиск: уточнение, аудит, ЭЦП, пояснительная записка…" aria-label="Поиск по вопросам"></div>
+  <div id="faqlist"></div>
+  <h2>Термины</h2>
+  <div class="tblwrap"><table>
+    <tr><th>Термин</th><th>Значение по п. 2 Правил</th></tr>
+    <tr><td>Орган управления</td><td>Уполномоченный орган соответствующей отрасли или местный исполнительный орган, осуществляющий права владения и пользования госпакетом акций (долей) или права субъекта в отношении ГП</td></tr>
+    <tr><td>Орган утверждения</td><td>Совет директоров АО, наблюдательный совет ТОО / ГП на праве хозяйственного ведения; для ГП без наблюдательного совета и ТОО без него — орган управления (п. 11)</td></tr>
+    <tr><td>Единый оператор, веб-портал реестра</td><td>Оператор реестра государственного имущества; портал www.e-qazyna.kz, через который разрабатываются, подписываются и хранятся планы и отчёты (п. 8, 12, 17)</td></tr>
+    <tr><td>Показатель прямого результата</td><td>Количественная характеристика объёма реализованных продуктов (товаров, работ, услуг)</td></tr>
+    <tr><td>Показатель конечного результата</td><td>Итог, эффект от достижения поставленной цели — один на цель, из целей органа управления</td></tr>
+    <tr><td>Показатель качества</td><td>Степень соответствия продукта установленным требованиям, ожиданиям потребителей</td></tr>
+    <tr><td>Ежегодное уточнение</td><td>Уточнение плана на очередной год пятилетки со второго года действия плана (п. 25)</td></tr>
+    <tr><td>Полугодовое уточнение</td><td>Уточнение текущего года по основаниям п. 34, не более двух раз в полугодие (п. 35)</td></tr>
+  </table></div>
+</section>
+
+<footer>Навигатор построен по тексту Правил (приказ от 30.04.2025 № 18, с изменениями 2026 г.). Пункты приведены по действующей нумерации; при расхождении приоритет у официального текста в ИПС «Әділет». Ставки ОПВР, социальных отчислений и ОСМС — по Социальному кодексу и закону о медстраховании на соответствующий год.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ===== ENGINE START ===== */
+(function(root){
+const YEAR_MIN=2015,YEAR_MAX=2040;
+const isNum=v=>typeof v==="number"&&isFinite(v);
+const txt=v=>v==null?"":String(v);
+const norm=s=>txt(s).toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ").trim();
+const fmt=(v,d=0)=>isNum(v)?v.toLocaleString("ru-RU",{minimumFractionDigits:d,maximumFractionDigits:d}).replace(/ /g," "):"—";
+const OPVR={2024:1.5,2025:2.5,2026:3.5,2027:4.5,2028:5,2029:5,2030:5,2031:5,2032:5};
+const SO=y=>y>=2025?5:3.5;
+
+class Sheet{
+  constructor(name,rows){this.name=name;this.rows=rows;this.hdr=null;this.years=null;this._parseHeader();}
+  cell(r,c){const row=this.rows[r];return row?row[c]:undefined}
+  rowText(r,maxc=12){const row=this.rows[r]||[];let s=[];for(let c=0;c<Math.min(maxc,row.length);c++){if(typeof row[c]==="string"&&row[c].trim())s.push(row[c])}return norm(s.join(" | "))}
+  _parseHeader(){
+    for(let r=0;r<Math.min(60,this.rows.length);r++){
+      const row=this.rows[r]||[];const ys=[];
+      row.forEach((v,c)=>{const n=isNum(v)?v:(/^\d{4}$/.test(txt(v).trim())?+v:NaN);if(Number.isInteger(n)&&n>=YEAR_MIN&&n<=YEAR_MAX)ys.push({y:n,c})});
+      if(ys.length>=3){this.hdr=r;this.years={};const sub=this.rows[r+1]||[];const maxc=Math.max(row.length,sub.length,...this.rows.slice(r,r+40).map(x=>(x||[]).length));
+        ys.forEach((yc,i)=>{const c0=yc.c,c1=i+1<ys.length?ys[i+1].c:maxc;const blocks=[];
+          for(let c=c0;c<c1;c++){const l=txt(sub[c]).trim();if(l)blocks.push({label:norm(l),c})}
+          if(!blocks.length)blocks.push({label:"",c:c0});
+          blocks.forEach((b,j)=>b.end=j+1<blocks.length?blocks[j+1].c:c1);
+          this.years[yc.y]={c0,c1,blocks}});
+        return}
+    }
+  }
+  yearList(){return this.years?Object.keys(this.years).map(Number).sort():[]}
+  find(pats,opts={}){const from=opts.from||0,to=opts.to||this.rows.length,maxc=opts.maxc||12;
+    for(let r=from;r<to;r++){const t=this.rowText(r,maxc);if(pats.every(p=>p.test(t)))return r}return -1}
+  findAll(pats,maxc=12){const out=[];for(let r=0;r<this.rows.length;r++){const t=this.rowText(r,maxc);if(pats.every(p=>p.test(t)))out.push(r)}return out}
+  blockVal(r,b){for(let c=b.c;c<b.end;c++){const v=this.cell(r,c);if(isNum(v))return v}return null}
+  /* effective value of a year: report > corrections > refinements (rightmost) > approved > fact */
+  val(r,y,mode="eff"){const Y=this.years&&this.years[y];if(!Y||r<0)return null;const B=Y.blocks;
+    const pick=re=>{const bs=B.filter(b=>re.test(b.label)&&!/отклонен/.test(b.label));for(let i=bs.length-1;i>=0;i--){const v=this.blockVal(r,bs[i]);if(v!=null)return v}return null};
+    if(mode==="appr"){const v=pick(/утвержд/);return v!=null?v:pick(/факт/)}
+    if(mode==="fact"){return pick(/отчет|факт/)}
+    if(mode==="first"){return this.blockVal(r,B[0])}
+    const order=[/отчет/,/декабр/,/август/,/апрел/,/уточнен/,/утвержд/,/факт/];
+    for(const re of order){const v=pick(re);if(v!=null)return v}return null}
+  kind(y){const Y=this.years&&this.years[y];if(!Y)return null;const L=Y.blocks.map(b=>b.label).join(" ");
+    if(/отчет/.test(L))return "report";if(/утвержд|уточнен/.test(L))return "plan";return "fact"}
+}
+
+function analyze(grid){
+  const S={};let note=null;
+  Object.keys(grid).forEach(n=>{const m=n.match(/(\d{1,2})\s*$/);if(/поясн/i.test(n))note=new Sheet(n,grid[n]);else if(m)S[+m[1]]=new Sheet(n,grid[n])});
+  const F=[];const add=(sev,app,title,text,fix)=>F.push({sev,app,title,text,fix});
+  const has=n=>!!S[n];
+  const p6=S[6],p7=S[7],p8=S[8],p10=S[10],p16=S[16],p17=S[17],p18=S[18],p19=S[19],p20=S[20],p24=S[24],p27=S[27],p28=S[28],p29=S[29];
+  if(!p6&&!p8&&!p16){add("crit","файл","Не распознана структура","В файле не найдены листы приложений (Пр6, Пр8, Пр16…). Загрузите выгрузку с веб-портала реестра без переименования листов.");return {findings:F,meta:{}}}
+  const base=p6||p16||p8;const years=base.yearList();
+  const reportYear=years.find(y=>base.kind(y)==="report")||null;
+  const planYears=years.filter(y=>base.kind(y)==="plan");
+  const firstPlan=planYears[0]||null;
+  const meta={years,reportYear,planYears,org:"",doctype:"",period:""};
+  /* header info */
+  const hs=S[2]||base;for(let r=0;r<15;r++){const t=hs.rowText(r,6);if(/наименование организации/.test(t))meta.org=txt(hs.rows[r].find(v=>/наименование организации/i.test(txt(v)))).replace(/.*?:/,"").trim();
+    if(/вид документа/.test(t))meta.doctype=t.replace(/.*вид документа:?/,"").trim();if(/период/.test(t)&&/планируем|отчетн/.test(t))meta.period=t.replace(/.*период:?/,"").trim();
+    if(/<дата>|<номер>/.test(t))add("warn","реквизиты","Реквизиты решения не заполнены","В шапке приложений остались заполнители «дата <дата> № <номер>». Без реквизитов решения органа утверждения единый оператор отказывает в принятии документа (п. 24, 33, 48).","Указать дату и номер решения органа утверждения после его принятия; до этого — проверить, что выбран верный тип документа на портале.")}
+  if(/отчет/.test(meta.doctype)&&planYears.length&&reportYear&&meta.period&&!meta.period.includes(String(reportYear)))add("info","реквизиты","Тип документа и период не согласованы",`В шапке указано «${meta.doctype}», период «${meta.period}», при этом графы «Отчёт» заполнены за ${reportYear} г., а на ${firstPlan} г. заполнен план. Проверьте, какой тип документа выбран на портале (отчёт за ${reportYear} г., ежегодное или полугодовое уточнение).`);
+
+  /* ---- balance ---- */
+  if(p6){
+    const rA=p6.find([/^активы/,/организац/]),rP=p6.find([/^пассивы/,/организац/]),rAd=p6.find([/^активы/])>=0?p6.find([/дочерних/],{from:p6.find([/^активы/])}):-1;
+    const nmaRow=p16?p16.find([/нематериальные активы/,/организац/,/балансов/]):-1;
+    const bad=[];years.forEach(y=>{const a=p6.val(rA,y),p=p6.val(rP,y);if(a!=null&&p!=null&&Math.abs(a-p)>1){let why="";const d=a-p;
+      const nma=p16&&nmaRow>=0?p16.val(nmaRow,y):null;const ad=rAd>=0?p6.val(rAd,y):null;
+      if(nma!=null&&Math.abs(Math.abs(d)-nma)<1)why=" — ровно балансовая стоимость НМА, то есть пассив сведён без НМА";
+      else if(ad!=null&&Math.abs(Math.abs(d)-ad)<1)why=" — ровно активы дочерних организаций (см. прил. 3)";
+      bad.push(`${y}: ${fmt(a)} против ${fmt(p)} (разница ${fmt(d)}${why})`)}});
+    if(bad.length)add("crit","прил. 6, 16, 17","Сломана балансовая увязка: актив ≠ пассив",`Активы и пассивы расходятся в ${bad.length} ${bad.length===1?"году":"годах"}: ${bad.join("; ")}.`,"Свести пассив к активу через нераспределённый доход или обязательства после пересчёта баланса каждого года; строки «дочерних организаций» либо подтвердить в прил. 3, либо убрать.");
+    else add("ok","прил. 6","Баланс сходится","Активы равны пассивам во всех годах.");
+    /* P&L */
+    const rD=p6.find([/^доходы/,/организац/]),rR=p6.find([/^расходы/,/организац/]),rPr=p6.find([/прибыль.*до налогообложения/,/организац/]),rNP=p6.find([/чистая прибыль/,/организац/]);
+    const pl=[];years.forEach(y=>{const d=p6.val(rD,y),r=p6.val(rR,y),pr=p6.val(rPr,y);if(d!=null&&r!=null&&pr!=null&&Math.abs(d-r-pr)>1)pl.push(`${y}: ${fmt(d)} − ${fmt(r)} = ${fmt(d-r)}, в плане ${fmt(pr)}`)});
+    if(pl.length)add("crit","прил. 6, 7, 10","Доходы − расходы ≠ прибыль до налогообложения",pl.join("; ")+".","Проверить, какие доходы/расходы не попали в итоги прил. 7 и 10, либо исправить строку прибыли.");
+    else add("ok","прил. 6","Финансовый результат увязан","Доходы − расходы = прибыль до налогообложения по всем годам.");
+    /* retained earnings vs net profit */
+    if(p17){const rRE=p17.find([/нераспределенный доход/,/организац/]);const rDiv=p6.find([/дивиденды/]);const bad2=[];
+      for(let i=1;i<years.length;i++){const y=years[i],y0=years[i-1];const re1=p17.val(rRE,y),re0=p17.val(rRE,y0),np=p6.val(rNP,y);
+        if(re1!=null&&re0!=null&&np!=null&&Math.abs((re1-re0)-np)>1)bad2.push(`${y}: прирост ${fmt(re1-re0)} при чистой прибыли ${fmt(np)}`)}
+      if(bad2.length)add("crit","прил. 6, 17","Прирост нераспределённого дохода не равен чистой прибыли",`Нераспределённый доход на конец года должен равняться остатку на начало плюс чистая прибыль минус дивиденды и отчисления в резервы. Не сходится: ${bad2.join("; ")}.`,"Пересчитать движение капитала по годам; если есть распределение чистого дохода — показать его в прил. 6.");
+      else if(rRE>=0)add("ok","прил. 17","Движение нераспределённого дохода увязано с прибылью","");}
+  }
+  /* ---- cash ---- */
+  if(p8){
+    const rB=p8.find([/сальдо на начало/]),rIn=p8.find([/поступление денежных средств, всего/]),rOut=p8.find([/выбытие денежных средств, всего/]),rE=p8.find([/сальдо на конец/]);
+    const chain=[],ident=[];
+    for(let i=0;i<years.length;i++){const y=years[i];const b=p8.val(rB,y),inn=p8.val(rIn,y),out=p8.val(rOut,y),e=p8.val(rE,y);
+      if([b,inn,out,e].every(v=>v!=null)&&Math.abs(b+inn-out-e)>1)ident.push(`${y}: ${fmt(b)} + ${fmt(inn)} − ${fmt(out)} = ${fmt(b+inn-out)}, в форме ${fmt(e)}`);
+      if(i>0){const e0=p8.val(rE,years[i-1]);if(e0!=null&&b!=null&&Math.abs(e0-b)>1)chain.push(`конец ${years[i-1]} ${fmt(e0)} → начало ${y} ${fmt(b)}`)}}
+    if(chain.length)add("crit","прил. 8, 20","Остатки денег не замыкаются между годами",`Остаток на конец года должен равняться остатку на начало следующего. Разрыв ${chain.length===1?"в одном месте":"в "+chain.length+" местах"}: ${chain.join("; ")}.${reportYear&&chain[0]&&chain[0].includes("конец "+reportYear)?" Входящий остаток планового года взят из плана, а не из факта отчётного года.":""}`,"Заменить входящий остаток планового года фактическим и пересчитать цепочку остатков до конца пятилетки.");
+    else add("ok","прил. 8","Остатки денег замыкаются по годам","");
+    if(ident.length)add("crit","прил. 8","Не выполняется тождество «начало + поступления − выбытия = конец»",ident.join("; ")+".","");
+    if(p16){const rC=p16.find([/деньги и их эквиваленты/,/организац/]);const bad=[];years.forEach(y=>{const c=p16.val(rC,y),e=p8.val(rE,y);if(c!=null&&e!=null&&Math.abs(c-e)>1)bad.push(`${y}: в балансе ${fmt(c)}, по движению ${fmt(e)}`)});
+      if(bad.length)add("warn","прил. 8, 16","Деньги в балансе не равны остатку по движению денежных средств",bad.join("; ")+".","Синхронизировать строку «Деньги и их эквиваленты» прил. 16 с сальдо на конец года прил. 8.");}
+  }
+  /* ---- fixed assets ---- */
+  if(p16){const rOS=p16.find([/основные средства/,/организац/,/балансов/]);
+    if(rOS>=0){const rF=p16.find([/первоначальная/],{from:rOS,to:rOS+4}),rAm=p16.find([/амортизац/],{from:rOS,to:rOS+4});const dec=[],eq=[];
+      for(let i=0;i<years.length;i++){const y=years[i];const bal=p16.val(rOS,y),f=p16.val(rF,y),am=p16.val(rAm,y);
+        if(bal!=null&&f!=null&&am!=null&&Math.abs(f-am-bal)>1)eq.push(`${y}: ${fmt(f)} − ${fmt(am)} ≠ ${fmt(bal)}`);
+        if(i>0){const am0=p16.val(rAm,years[i-1]),f0=p16.val(rF,years[i-1]);if(am!=null&&am0!=null&&am<am0-1&&f!=null&&f0!=null&&f>=f0)dec.push(`${y}: ${fmt(am0)} → ${fmt(am)} при росте первоначальной стоимости`)}}
+      if(dec.length)add("crit","прил. 16, 26","Накопленная амортизация уменьшается",`Без выбытий накопленная амортизация ОС расти обязана, а здесь она падает: ${dec.join("; ")}. Признак того, что баланс дальних лет не пересчитан и не связан с начислением амортизации в прил. 26/27.`,"Пересчитать накопленную амортизацию: остаток на начало + начислено (прил. 26, 27) − выбытия.");
+      if(eq.length)add("warn","прил. 16","Балансовая стоимость ОС ≠ первоначальная − амортизация",eq.join("; ")+".","");}
+  }
+  /* ---- cross-form totals ---- */
+  const cross=(a,ra,b,rb,label,app,fix)=>{if(!a||!b||ra<0||rb<0)return;const bad=[];years.forEach(y=>{const va=a.val(ra,y),vb=b.val(rb,y);if(va!=null&&vb!=null&&Math.abs(va-vb)>1)bad.push(`${y}: ${fmt(va)} против ${fmt(vb)}`)});
+    if(bad.length)add("warn",app,label,bad.join("; ")+".",fix||"");};
+  if(p6&&p7)cross(p6,p6.find([/^доходы/,/организац/]),p7,p7.find([/^доходы/,/всего/]),"Доходы в прил. 6 не равны итогу прил. 7","прил. 6, 7");
+  if(p6&&p10)cross(p6,p6.find([/^расходы/,/организац/]),p10,p10.find([/^расходы/,/всего/]),"Расходы в прил. 6 не равны итогу прил. 10","прил. 6, 10");
+  if(p7&&p19)cross(p7,p7.find([/^доходы/,/всего/]),p19,p19.find([/^доходы, всего/]),"Итог прил. 7 не равен итогу расчёта доходов (прил. 19)","прил. 7, 19");
+  if(p8&&p20)cross(p8,p8.find([/сальдо на конец/]),p20,p20.find([/сальдо на конец/]),"Сальдо на конец в прил. 8 и прил. 20 различаются","прил. 8, 20");
+  if(p6&&p18)cross(p6,p6.find([/фонд оплаты труда/]),p18,p18.find([/^фот/,/организац/]),"ФОТ в прил. 6 не равен ФОТ в прил. 18","прил. 6, 18");
+  if(p10&&p24){const rS=p10.find([/себестоимость/]),rT=p24.find([/расходы по основному производству/]);cross(p10,rS,p24,rT,"Себестоимость в прил. 10 не равна итогу прил. 24","прил. 10, 24")}
+  if(p10&&p27)cross(p10,p10.find([/административные расходы/]),p27,p27.find([/административные расходы, всего/]),"Административные расходы: прил. 10 ≠ прил. 27","прил. 10, 27");
+  if(p10&&p29)cross(p10,p10.find([/прочие расходы/]),p29,p29.find([/прочие расходы, всего/]),"Прочие расходы: прил. 10 ≠ прил. 29","прил. 10, 29");
+  if(S[9]&&S[21]){const a=S[9],b=S[21];const rb=b.find([/^всего/]);const rrb=a.find([/республиканского бюджета/]),rmb=a.find([/местного бюджета/]);
+    if(rb>=0&&rrb>=0){const bad=[];years.forEach(y=>{const v=(a.val(rrb,y)||0)+(rmb>=0?(a.val(rmb,y)||0):0),w=b.val(rb,y);if(w!=null&&v&&Math.abs(v-w)>1)bad.push(`${y}: ${fmt(v)} против ${fmt(w)}`)});if(bad.length)add("warn","прил. 9, 21","Бюджетные договоры: прил. 9 ≠ прил. 21",bad.join("; ")+".","")}
+    const rNo=a.find([/№ п\/п договора/]);const detail=a.findAll([/договор/]).length;if(a.rows.filter((r,i)=>i>a.hdr+3&&isNum(a.blockVal(i,a.years[years[0]]?.blocks[0]||{c:0,end:1}))).length<=2)add("warn","прил. 9, 21","Договоры не расшифрованы","Форма предусматривает построчное раскрытие продуктов и договоров (№ договора, предмет, стоимость, выполнено, оплачено, задолженность); заполнены только итоговые строки по уровням бюджета.","Перечислить договоры с бюджетом за отчётный и плановый годы.");}
+  if(S[11]&&S[22]){const a=S[11],b=S[22];const ra=a.find([/^всего/]);const secs=[/инвестиционные проекты/,/приобретение основных средств/,/нематериальных активов/,/биологических активов/,/приобретение запасов/,/приобретение работ и услуг/].map(re=>b.find([re])).filter(r=>r>=0);
+    const bad=[];years.forEach(y=>{if(!b.years[y]||y===reportYear)return;const va=a.val(ra,y,"first"),vb=secs.reduce((s,r)=>s+(b.val(r,y,"first")||0),0);if(va!=null&&vb&&Math.abs(va-vb)>1)bad.push(`${y}: ${fmt(va)} против ${fmt(vb)}`)});
+    if(bad.length)add("warn","прил. 11, 22","Итог прил. 11 не равен сумме разделов прил. 22",bad.join("; ")+".","");
+    /* investment projects on plan years */
+    const rInv=a.find([/инвестиционные проекты/]);if(rInv>=0){const empty=planYears.filter(y=>a.years[y]&&(a.val(rInv,y,"first")||0)===0);if(empty.length&&planYears.length)add("warn","прил. 11","Нет инвестиционных проектов на плановые годы",`Раздел «Инвестиционные проекты и программы» пуст на ${empty.join(", ")} гг. Если в КПД (прил. 4) заложен ввод объектов (общежитие, корпус, оборудование как проект), они должны быть здесь с источником финансирования и сроками.`,"Добавить проекты с датами начала/завершения (ММ.ГГГГ), стоимостью и источником; либо убедиться, что капитальные объекты в прил. 4 не запланированы.")}
+    /* outer years aggregated in 22 */
+    const later=planYears.slice(1).filter(y=>b.years[y]);if(later.length){const cnt=y=>b.rows.filter((row,i)=>i>b.hdr+2&&(txt(row[2])||txt(row[3]))&&isNum(b.val(i,y,"first"))).length;const c1=cnt(firstPlan),cs=later.map(cnt);
+      if(c1>=10&&cs.every(c=>c<=6))add("info","прил. 22",`Закупки на ${later.join(", ")} гг. даны укрупнённо`,`На ${firstPlan} г. расписано ${c1} позиций, на последующие годы — по ${Math.max(...cs)} строк. Для проекта пятилетки допустимо, при ежегодном уточнении очередной год придётся расписать по позициям с технической характеристикой.`)}
+  }
+  /* ---- copied outer years ---- */
+  if(p10&&firstPlan){const later=planYears.slice(1);const rows=[[/^расходы/,/всего/],[/себестоимость/],[/административные/],[/прочие расходы/]].map(p=>p10.find(p)).filter(r=>r>=0);
+    const copied=[];later.forEach(y=>{let same=0,tot=0;rows.forEach(r=>{const v=p10.val(r,y);const a0=reportYear?p10.val(r,reportYear,"appr"):null;const a1=p10.val(r,firstPlan,"appr");if(v!=null){tot++;if((a0!=null&&Math.abs(v-a0)<1)||(a1!=null&&Math.abs(v-a1)<1))same++}});if(tot&&same>=Math.max(2,tot-1))copied.push(y)});
+    if(copied.length)add("crit","прил. 10, 24–29",`Годы ${copied.join(", ")} не планировались, а скопированы`,`Расходы, себестоимость, административные и прочие расходы на ${copied.join(", ")} гг. совпадают с утверждённым планом ${reportYear||firstPlan} г. Пункт 14 Правил требует показателей с разбивкой по каждому году пятилетки; при этом факт ${reportYear||"отчётного года"} и план ${firstPlan} г. уже другие.`,"Пересчитать дальние годы: индексация ФОТ и тарифов, ставки социальных платежей по годам, амортизация, инвестиции.");}
+  /* ---- rates ---- */
+  const rateCheck=(sh,app)=>{if(!sh)return;const rPay=sh.find([/оплата труда работников/]);const rOp=sh.find([/опвр/],{from:rPay,to:rPay+22}),rSo=sh.find([/^социальные отчисления/],{from:rPay,to:rPay+22});if(rPay<0)return;const bad=[];
+    years.filter(y=>y>=(firstPlan||reportYear||0)).forEach(y=>{const pay=sh.val(rPay,y);if(!pay)return;const op=sh.val(rOp,y),so=sh.val(rSo,y);
+      if(op!=null&&OPVR[y]){const r=op/(pay*0.9)*100;if(Math.abs(r-OPVR[y])>0.6)bad.push(`ОПВР ${y}: ${r.toFixed(1)}% при ставке ${OPVR[y]}%`)}
+      if(so!=null){const r=so/(pay*0.9)*100;if(Math.abs(r-SO(y))>0.7)bad.push(`СО ${y}: ${r.toFixed(1)}% при ставке ${SO(y)}%`)}});
+    if(bad.length)add("crit",app,"Ставки социальных платежей не соответствуют году",`Расчёт от оплаты труда (база 90%): ${bad.join("; ")}. ОПВР растут по графику Социального кодекса (1,5% → 2,5% → 3,5% → 4,5% → 5%), социальные отчисления — 5% с 2025 г.`,"Пересчитать ОПВР и СО по ставкам каждого года в прил. 24–27 и в налогах прил. 20; это увеличит расходы дальних лет.")};
+  rateCheck(p24,"прил. 24");
+  /* ---- admin gaps ---- */
+  if(p27){const rT=p27.find([/административные расходы, всего/]);const rows=[[/^социальные отчисления/],[/^опвр/],[/^социальный налог/],[/^осмс/]].map(p=>p27.find(p)).filter(r=>r>=0);const gaps=[];
+    rows.forEach(r=>{planYears.forEach(y=>{const v=p27.val(r,y);const others=planYears.filter(z=>z!==y).map(z=>p27.val(r,z)).filter(x=>x);if(v==null&&others.length>=2)gaps.push(`${p27.rowText(r,6).replace(/\|.*/,"").trim()} — ${y}`)})});
+    if(gaps.length)add("warn","прил. 27","В отдельном году пропущены статьи административных расходов",`Статья заполнена во всех плановых годах, кроме одного: ${gaps.join("; ")}. Из-за этого итог прил. 10 «прыгает» между годами.`,"Заполнить пропущенный год по той же методике.")}
+  /* ---- headcount / FOT ---- */
+  if(p6){const rAvg=p6.find([/среднесписочная/]),rF=p6.find([/фонд оплаты труда/]);const av=years.map(y=>p6.val(rAvg,y)).filter(v=>v!=null);
+    if(av.length>=5&&new Set(av.map(v=>Math.round(v))).size===1)add("warn","прил. 6, 18",`Среднесписочная численность ${fmt(av[0])} чел. неизменна все ${av.length} лет`,"Численность без динамики при растущих объёмах в прил. 4 и меняющемся ФОТ выглядит как незаполненный, а не спланированный показатель. Вакансии (штат − среднесписочная) — основание для уточнения по п. 34 и должны быть объяснены.","Спланировать численность по категориям в прил. 18 с учётом КПД и оптимизации вакансий.");
+    if(rF>=0&&reportYear){const f=p6.val(rF,reportYear,"fact");const low=planYears.filter(y=>{const v=p6.val(rF,y);return f&&v!=null&&v<f-1});if(low.length)add("warn","прил. 6, 18",`ФОТ на ${low.join(", ")} гг. ниже факта ${reportYear} г.`,`Факт ${reportYear} г. — ${fmt(f)}, план: ${low.map(y=>`${y} — ${fmt(p6.val(rF,y))}`).join(", ")}. Снижение ФОТ без индексации и без плана по вакансиям требует обоснования в записке (п. 13, 37).`,"Либо обосновать сокращение штата, либо заложить индексацию.")}}
+  /* ---- passport ---- */
+  if(S[2]){const p2=S[2];const all=p2.rows.map((r,i)=>p2.rowText(i,10)).join(" || ");
+    if(/некоммерческое акционерное/.test(all)&&/организационно-правовая форма[^|]*\|[^|]*акционерное общество/.test(all)&&!/организационно-правовая форма[^|]*\|[^|]*некоммерческое/.test(all))add("warn","прил. 2","ОПФ указана как «Акционерное общество»","Наименование содержит «некоммерческое акционерное общество», а в графе ОПФ — просто «Акционерное общество».","Указать «Некоммерческое акционерное общество» по уставу.");
+    const rL=p2.find([/является ли землепользователем/]);const landFilled=rL>=0&&p2.rows.slice(rL,rL+7).some(row=>(row||[]).some(v=>isNum(v)||/\d{2}\.\d{2}\.\d{4}|№\s*\d/.test(txt(v))));
+    const rTax=p27?p27.find([/земельный налог/]):-1;const tax=rTax>=0?years.map(y=>p27.val(rTax,y)).some(v=>v):false;
+    if(tax&&!landFilled)add("warn","прил. 2, 27","Землепользование не отражено при уплате земельного налога","В прил. 27 запланирован земельный налог, а раздел паспорта «Является ли землепользователем» не заполнен (или в записке указано «не является»). Земельный налог платит правообладатель участка — реквизиты решений на землепользование должны быть в паспорте.","Заполнить решения/акты на право землепользования и характеристику (постоянное, безвозмездное и т.д.).");
+    if(/окэд[^|]*\|[^|]*отрасл/.test(all)&&!/\d{2}\.\d{2}/.test(all.slice(all.indexOf("окэд"),all.indexOf("окэд")+200)))add("info","прил. 2","ОКЭД указан без кода","Нужен код ОКЭД с наименованием (например, 85.42 «Высшее образование»).");
+    const rSh=p2.find([/количество акций/]);if(rSh>=0&&/акционерное/.test(all)){const filled=p2.rows.slice(rSh,rSh+8).some(row=>(row||[]).some(v=>isNum(v)));if(!filled)add("warn","прил. 2","Для АО не заполнены сведения об акциях","Количество объявленных и размещённых акций, стоимость и доходность одной акции, сведения о регистраторе пусты при заполненном уставном капитале.","Заполнить по данным регистратора и уставу.")}}
+  /* ---- corporate structure vs subsidiaries ---- */
+  if(S[3]&&p6){const p3=S[3];const rA=p6.find([/^активы/]);const rD=rA>=0?p6.find([/дочерних/],{from:rA,to:rA+3}):-1;const vals=rD>=0?years.map(y=>p6.val(rD,y)).filter(v=>v):[];
+    const p3filled=p3.rows.slice((p3.hdr||20)+1).some(row=>(row||[]).some(v=>/^\d{12}$/.test(txt(v))));
+    if(vals.length&&!p3filled)add("warn","прил. 3, 6, 16","Активы дочерних организаций при пустой корпоративной структуре",`В прил. 6/16 заполнены строки «дочерних организаций» (${vals.map(v=>fmt(v)).join(", ")}), а прил. 3 пусто. Либо показать дочернюю организацию с датой выбытия и пояснить, либо убрать строки.`,"")}
+  /* ---- placements vs interest ---- */
+  if(S[15]&&p7){const p15=S[15],rP=p15.find([/временно.свободные денежные средства/]),rI=p7.find([/доходы по вознаграждениям/]);const same=[],missing=[];
+    years.forEach(y=>{const a=p15.val(rP,y),b=p7.val(rI,y);if(a!=null&&b!=null&&Math.abs(a-b)<1)same.push(y);if((a==null||a===0)&&b&&planYears.includes(y))missing.push(y)});
+    if(same.length)add("warn","прил. 15, 7",`В прил. 15 за ${same.join(", ")} г. стоит сумма вознаграждения, а не размещения`,"Значение совпадает с доходами по вознаграждениям в прил. 7 — вероятно, перепутаны показатели.","Указать объём размещённых средств; доход по ним остаётся в прил. 7.");
+    if(missing.length)add("warn","прил. 15, 7",`Размещений нет на ${missing.join(", ")} гг., а доходы по вознаграждениям запланированы`,"Если доходы от депозитов планируются, объём размещения должен быть показан в прил. 15.","")}
+  /* ---- KPI sheet ---- */
+  if(S[4]){const p4=S[4];let ones=0,goals=0,noplan=0,nounit=0;const H=p4.hdr||0;
+    for(let r=H+2;r<p4.rows.length;r++){const row=p4.rows[r]||[];const t=p4.rowText(r,12);
+      const gi=row.findIndex((v,c)=>c>=6&&c<=10&&isNum(v)&&typeof row[c+1]==="string"&&txt(row[c+1]).length>15);if(gi>=0){goals++;if(row[gi]===1)ones++}
+      const isKpi=row.some((v,c)=>c>=11&&c<=15&&/^(прямой|качества|конечный)/.test(norm(v)));
+      if(isKpi){const vals=years.map(y=>p4.val(r,y));const plan=planYears.map(y=>p4.val(r,y)).some(v=>v!=null);const rep=reportYear?p4.val(r,reportYear):null;const anyv=vals.some(v=>v!=null);
+        if(anyv&&!plan&&rep==null)noplan++;const unit=row.slice(15,19).some(v=>typeof v==="string"&&v.trim());if(anyv&&!unit)nounit++}}
+    if(goals>=3&&ones>=goals-1)add("warn","прил. 4, 5","Цели и задачи не пронумерованы",`Из ${goals} найденных целей/задач ${ones} имеют номер «1». Программа реализации (прил. 5) ссылается на цели по номерам, поэтому связь не читается.`,"Пронумеровать цели 1…N, задачи — сквозной нумерацией внутри цели, и использовать те же номера в прил. 5.");
+    if(noplan>=3)add("warn","прил. 4",`${noplan} показател${noplan<5?"я":"ей"} без плановых значений`,"Строки заполнены только за прошлые годы — это показатели предыдущего плана. Их нужно либо исключить, либо задать целевые значения на все годы пятилетки.","");
+    if(nounit>=2)add("info","прил. 4",`${nounit} показател${nounit<5?"я":"ей"} без единицы измерения`,"","")}
+  /* ---- explanatory note ---- */
+  if(note){const cells=[];note.rows.forEach(row=>(row||[]).forEach(v=>{if(typeof v==="string"&&v.length>80)cells.push(v)}));
+    const trunc=cells.filter(s=>s.length===255).length;if(trunc)add("warn","пояснительная записка",`${trunc} текст${trunc===1?"":"ов"} обрезан${trunc===1?"":"ы"} на 255 символах`,"Пояснения обрываются на середине фразы. Проверьте, обрезан ли текст на портале или только в выгрузке; в первом случае сократите или разбейте текст.","");
+    const mentionsPlan=planYears.some(y=>cells.some(s=>s.includes(String(y))));const mentionsRep=reportYear&&cells.some(s=>s.includes(String(reportYear)));
+    if(cells.length&&mentionsRep&&!mentionsPlan)add("crit","пояснительная записка",`Записка описывает только ${reportYear} год`,`Ни в одном пояснении не упоминаются плановые годы (${planYears.join(", ")}). Пункт 13 Правил требует обоснования показателей на планируемый период и пояснений к каждому приложению, п. 37 — обоснования каждого уточнения.`,"Для каждого приложения: методика расчёта, допущения по годам, причины отклонений факта, основание уточнения по п. 34.");
+    if(cells.length<8)add("info","пояснительная записка","Записка короткая",`Найдено ${cells.length} содержательных пояснений на ${Object.keys(S).length} приложений.`,"")}
+  const order={crit:0,warn:1,info:2,ok:3};F.sort((a,b)=>order[a.sev]-order[b.sev]);
+  return {findings:F,meta};
+}
+root.PRAudit={analyze,fmt};
+})(typeof window!=="undefined"?window:globalThis);
+/* ===== ENGINE END ===== */
+</script>
+<script>
+/* ---------- data ---------- */
+const APPS = [
+ {n:1,t:"Структура плана развития / отчёта",k:"appr",p:"п. 12, 42",what:["Перечень разделов документа; формируется порталом автоматически"],err:["В пояснительной записке структура перечислена неполно или не совпадает с фактическим набором приложений"],note:"Одна структура и для плана, и для уточнений, и для отчёта об исполнении."},
+ {n:2,t:"Паспорт организации",k:"appr",p:"п. 12",what:["Реквизиты, БИН, ОКЭД (код и наименование), ОКПО, ОПФ точно по уставу (АО / НАО / ТОО / ГП)","История создания: акт о создании, госрегистрация","Статус субъекта естественной монополии, доминанта, природо-, недро-, водо-, земле-, лесопользователя — с реквизитами разрешений","Уставный капитал, объявленные / размещённые акции, доля государства, стоимость и доходность акции, регистратор","Имущество с ограничением в распоряжении и обременения"],err:["«Не является землепользователем» при уплате земельного налога в прил. 27","Для АО не заполнены акции, доходность акции, регистратор","ОКЭД текстом без кода; ОПФ «АО» вместо «НАО»"]},
+ {n:3,t:"Корпоративная структура",k:"appr",p:"п. 12",what:["Дочерние и зависимые организации по уровням, ОПФ, БИН, доля участия","Количество субъектов квазигосударственного сектора, формируемых организацией"],err:["Приложение пустое, а в прил. 6 / 16 заполнены строки «дочерних организаций» — актив расходится с пассивом ровно на эту сумму","Не показано выбытие дочерней организации внутри пятилетки"]},
+ {n:4,t:"Цели, задачи и ключевые показатели",k:"appr",p:"п. 2–7, 12",what:["Сведения о доведении целей органом управления: дата и номер документа","Цели органа управления → цели организации (с одним конечным показателем на цель) → задачи → показатели прямого результата и качества","Методика (формула) расчёта и единица измерения каждого КПД","Значения по всем годам пятилетки"],err:["Все цели и задачи под номером «1» — программу реализации (прил. 5) невозможно привязать","Цель без цели органа управления или без конечного показателя; конечный показатель не про эту цель","Показатели старого плана без целевых значений, дубли с разной формулировкой, пустые единицы измерения","Уточнение плана «под факт» без обоснования — при мониторинге сравнивают с первоначальным планом (п. 54)","Рост показателей не отражён в ФОТ, численности и инвестициях"]},
+ {n:5,t:"Программа реализации",k:"appr",p:"п. 12",what:["По каждой задаче — продукт (товар / услуга / работа), единица, количество, себестоимость единицы, цена реализации единицы, по годам"],err:["Продукты заданы не по всем задачам","Скачки удельной себестоимости между годами без объяснения (признак нескорректированных дальних лет)","Себестоимость ≈ цена (нулевая рентабельность) без пояснения в записке"],note:"Количество × цена должно сходиться с доходами от реализации в прил. 7 / 19, количество × себестоимость — с прил. 23 / 24."},
+ {n:6,t:"Основные показатели ФХД",k:"appr",p:"п. 12, 14",what:["Активы, пассивы (собственный капитал, обязательства), доходы, расходы, валовой доход, прибыль до налогообложения, чистая прибыль","Дивиденды / доход на долю / распределяемый доход ГП, распределение чистого дохода","Рентабельность активов, капитала, доходов; леверидж; EBITDA; доходность акции (АО) или инвестированных средств (ТОО, ГП)","Численность (штат, среднесписочная), ФОТ"],err:["Актив ≠ пассив в отдельных годах","Доходы − расходы ≠ прибыль","Среднесписочная численность и ФОТ одинаковы все пять лет","Не заполнена доходность одной акции для АО","Строки «дочерних организаций» заполнены при пустом прил. 3"]},
+ {n:7,t:"Доходы",k:"appr",p:"п. 12",what:["Доходы от реализации, от государственных субсидий и помощи, по вознаграждениям, прочие — организации, дочерних, консолидированно"],err:["Итог не равен прил. 6 и сумме статей прил. 19","Доходы по вознаграждениям планируются при отсутствии размещений в прил. 15"]},
+ {n:8,t:"Денежные средства",k:"appr",p:"п. 12",what:["Сальдо на начало, поступления (по реализации, безвозмездно на активы, транзитные, иные), выбытия (поставщикам, безвозмездные, транзитные, собственникам, иное), сальдо на конец"],err:["Сальдо на конец года ≠ сальдо на начало следующего","Сальдо на начало планового года взято из плана, а не из факта предыдущего года","Транзитные поступления ≠ транзитные выбытия без объяснения остатка"],note:"Детализация — в прил. 20; итоговые строки должны совпадать до тиына."},
+ {n:9,t:"Реализация продуктов за счёт республиканского и местного бюджета",k:"appr",p:"п. 12",what:["По уровням бюджета: количество договоров, продукт, предмет каждого договора, стоимость, выполнено, не выполнено, оплачено, остаток, дебиторская и кредиторская задолженность"],err:["Заполнены только итоговые строки с «X» — договоры не перечислены, задолженность не показана","Финансирование через квазигосударственный сектор (операторы, финансовые центры) не оговорено в записке — выглядит как «исчезновение» бюджета"]},
+ {n:10,t:"Расходы",k:"appr",p:"п. 12",what:["Себестоимость реализованной продукции, административные расходы, расходы по вознаграждениям, прочие — по годам; дочерние и консолидированно"],err:["Дальние годы равны утверждённому плану первого года","Итог не равен прил. 24 + 27 + 28 + 29"]},
+ {n:11,t:"Инвестиции и приобретение товаров, работ и услуг",k:"appr",p:"п. 12",what:["Инвестиционные и инновационные проекты: даты начала / завершения (ММ.ГГГГ), стоимость, освоено, предстоит","Источники: уставный капитал, займы, бюджетные кредиты, субсидии, безвозвратные средства, нераспределённый доход, амортизация, собственные средства","Основные средства, НМА, биологические активы, запасы, работы и услуги"],err:["Крупный объект в КПД (общежитие, корпус) есть, а проекта с источником финансирования — нет","Все источники — «собственные средства», включая субсидии из прил. 7 / 8","Даты и освоение по проектам не заполнены"],note:"Итоги равны прил. 22. Сумму на текущий год стоит свести с годовым планом закупок и объяснить разницу."},
+ {n:12,t:"Приобретение долевых инструментов",k:"appr",p:"п. 12",what:["Проекты по приобретению акций / долей АО и ТОО: объект, показатели по годам"],err:["Если не предусмотрено — так и написать в записке, приложение оставить пустым"]},
+ {n:13,t:"Занимаемая площадь и автотранспорт",k:"appr",p:"п. 12",what:["Площадь административного персонала, в т.ч. арендуемая; норматив площади; штатная численность АУП; расходы на аренду","Служебные автомобили АУП: фактически, по нормативу положенности, арендуемые, расходы на аренду"],err:["Числа в таблице и в пояснительной записке не совпадают","Дальние годы возвращаются к значениям первого года"]},
+ {n:14,t:"Структура заимствований",k:"appr",p:"п. 12",what:["Каждый заём / гарантия: заимодатель, инструмент, цель, основание, решение органа, договор, условия, сроки, обеспечение, остаток долга по годам"],err:["«Заимствования не планируются», а в прил. 17 есть краткосрочные финансовые обязательства"]},
+ {n:15,t:"Размещение временно свободных денег",k:"appr",p:"п. 12",what:["Объём размещения всего и по видам: ГЦБ, корпоративные бумаги, БВУ, другие — по годам"],err:["Вместо суммы размещения внесена сумма вознаграждения","Размещения не запланированы на годы, где в прил. 7 есть доходы по вознаграждениям","Факт в прил. 15 не совпадает с квартальными данными прил. 31"]},
+ {n:16,t:"Активы (расчёт)",k:"calc",p:"п. 16",what:["Краткосрочные: деньги, финансовые активы, дебиторская (в т.ч. сомнительная, просроченная), запасы, займы выданные, прочие","Долгосрочные: финансовые активы, инвестиции, инвестиционное имущество, ОС и НМА (первоначальная, амортизация, обесценение, балансовая), биологические, прочие"],err:["Накопленная амортизация уменьшается при росте первоначальной стоимости","Деньги на конец года ≠ сальдо в прил. 8 / 20","Балансовая ≠ первоначальная − амортизация − обесценение"]},
+ {n:17,t:"Пассивы (расчёт)",k:"calc",p:"п. 16",what:["Собственный капитал: оплаченный УК, эмиссионный доход, резервы, нераспределённый доход, выкупленные инструменты","Обязательства: краткосрочная и долгосрочная кредиторская задолженность по видам (финансовые, налоги, вознаграждения, поставщики, оплата труда, прочие), в т.ч. просроченная"],err:["Итог ≠ итогу активов прил. 16 (часто — ровно на НМА или на дочерние организации)","Прирост нераспределённого дохода ≠ чистая прибыль − дивиденды − резервы","Финансовые обязательства при пустом прил. 14"]},
+ {n:18,t:"Персонал (расчёт)",k:"calc",p:"п. 16",what:["Численность по штату и среднесписочная по категориям: основное производство, вспомогательное, АУП, прочие; в штате / вне штата","Оплата труда по категориям: основная, доплаты и премии, непостоянные выплаты (оздоровление, единовременные, прочие)","ФОТ, среднемесячная зарплата, расходы на одного работника, производительность труда, коэффициент опережения, экономия ФОТ, текучесть, вознаграждение СД, повышение квалификации, новые / оптимизированные рабочие места, социальная программа"],err:["Численность и ФОТ без динамики; вакансии (штат − среднесписочная) не объяснены — п. 34 называет вакантные единицы основанием для уточнения","Средняя зарплата посчитана как ФОТ/12, а не на одного работника"]},
+ {n:19,t:"Доходы по источникам признания (расчёт)",k:"calc",p:"п. 16",what:["Реализация: госорганам (РБ, МБ) по продуктам, квазигосударственному сектору, юридическим лицам, физическим лицам","Вознаграждения, безвозмездно полученные активы (субсидии по видам), аренда, курсовая разница, прочие"],err:["Итог ≠ прил. 7","Госзаказ через оператора отражён как квазигосударственный сектор без пояснения"]},
+ {n:20,t:"Поступление и выбытие денежных средств (расчёт)",k:"calc",p:"п. 16",what:["Те же статьи, что в прил. 8, с расшифровкой по источникам, налогам и отчислениям (соцналог, СО, ОСМС, ИПН, ОПВ, ВОСМС, ОПВР), сборам, приобретению активов, транзитным средствам, прочим выплатам"],err:["Выплаты по оплате труда ≠ ФОТ − ИПН − ОПВ − ВОСМС","ОПВР, СО в дальних годах по ставкам прошлых лет","Транзитные потоки (стипендии, соцвыплаты) заполнены только на один год"]},
+ {n:21,t:"Реализация продуктов за счёт бюджета (расчёт)",k:"calc",p:"п. 16",what:["Расшифровка прил. 9 по продуктам и договорам, по уровням бюджета"],err:["Только итоговые строки; продукт «Х» вместо наименования"]},
+ {n:22,t:"Приобретение инвестиций, товаров, работ и услуг (расчёт)",k:"calc",p:"п. 16",what:["Каждая позиция: проект, источник финансирования, наименование актива, стоимость, краткая техническая характеристика, по годам"],err:["Дальние годы одной строкой «Основные средства / Запасы / Услуги»","Переходящие позиции задвоены между отчётным и плановым годом","Сумма года не сведена с планом закупок"]},
+ {n:23,t:"План основного производства (расчёт)",k:"calc",p:"п. 16",what:["По каждому продукту: незавершённое производство на начало / конец, произведено, себестоимость произведённого и реализованного, количество"],err:["Количество ≠ прил. 4 / 5; себестоимость ≠ прил. 24"]},
+ {n:24,t:"Расходы основного производства с накладными и вспомогательным производством (расчёт)",k:"calc",p:"п. 16",what:["По продуктам: запасы, оплата труда, услуги подрядчиков, налоги и социальные отчисления, прочие затраты; плюс распределённые накладные и вспомогательные"],err:["Ставки ОПВР / СО / ОСМС не соответствуют году","Итог ≠ себестоимость в прил. 10"]},
+ {n:25,t:"Расходы на вспомогательное производство (расчёт)",k:"calc",p:"п. 16",what:["Вспомогательные продукты (общежития, столовые, транспорт…) по статьям затрат"],err:["Не распределены на основные продукты в прил. 24"]},
+ {n:26,t:"Накладные расходы (расчёт)",k:"calc",p:"п. 16",what:["Статьи: запасы, оплата труда, услуги (коммунальные, связь, банк, охрана, интернет, текущий ремонт, информационные…), налоги, амортизация ОС и НМА, прочие","База распределения и удельные показатели по продуктам"],err:["100% накладных на один продукт без обоснования базы","Амортизация не связана с движением накопленной амортизации в прил. 16","Коммунальные и охрана в дальних годах ниже текущего"]},
+ {n:27,t:"Административные расходы (расчёт)",k:"calc",p:"п. 16",what:["Запасы, оплата труда АУП, услуги (аудит, связь, коммунальные…), налоги и отчисления, амортизация, командировочные, другие обязательные платежи (земельный, имущественный, транспортный налог, платы), прочие"],err:["В одном из годов пропущены социальные отчисления / ОПВР — итог прил. 10 «прыгает»","Аудит заложен символической суммой при обязательном аудите"]},
+ {n:28,t:"Расходы по вознаграждениям (расчёт)",k:"calc",p:"п. 16",what:["По вкладам, кредитам и временной финансовой помощи, облигациям, лизингу, гарантиям — по договорам"],err:["Пусто при наличии финансовых обязательств в прил. 17"]},
+ {n:29,t:"Прочие расходы (расчёт)",k:"calc",p:"п. 16",what:["Оплата труда прочего персонала, выбытие и обесценение активов, курсовые разницы, праздничные мероприятия, прочие с расшифровкой"],err:["Крупные разовые статьи отчётного года (обесценение дебиторской задолженности) не объяснены"]},
+ {n:30,t:"Отчётная информация о структуре заимствований",k:"q",p:"п. 50",what:["Ежеквартально: основной долг на начало, погашение, выплата процентов — план / факт по кварталам"],err:["Не направляется «за отсутствием займов» — форма подаётся с нулями в срок"]},
+ {n:31,t:"Отчётная информация о размещении временно свободных денег",k:"q",p:"п. 50",what:["Ежеквартально: остаток размещённых средств, план и факт размещения, возврат, вознаграждение, срок, средний объём, эффективность — по инструментам"],err:["Факт года ≠ прил. 15"]},
+ {n:32,t:"Информация о деятельности организаций для мониторинга",k:"q",p:"п. 53",what:["Сводные данные по организациям, которые орган управления использует для отчёта о мониторинге до 10 октября"],err:[]}
+];
+
+const TL = [
+ {m:1,d:1,cls:"rep",what:"Проект отчёта об исполнении за прошлый год — администратору бюджетных программ",who:"Организации с бюджетным финансированием; утверждение не требуется",p:"п. 41"},
+ {m:4,d:15,cls:"rep",what:"Проект отчёта об исполнении — органу утверждения (без аудита)",who:"Исполнительный орган; с расчётами по прил. 16–29",p:"п. 43"},
+ {m:4,d:30,cls:"rep",what:"Если аудированной отчётности нет к этой дате — готовится отчёт по оперативным данным",who:"Структурное подразделение — до 10 мая; утверждает исполнительный орган",p:"п. 49"},
+ {m:5,d:1,cls:"",what:"Проект ежегодного уточнения на следующий год — администратору бюджетных программ",who:"Организации с бюджетными расходами; по лимитам и итогам стратегического обзора",p:"п. 26"},
+ {m:6,d:1,cls:"rep",what:"Утверждение отчёта об исполнении (без аудита); направление отчёта по оперативным данным",who:"Орган утверждения / исполнительный орган",p:"п. 46, 49"},
+ {m:6,d:25,cls:"",what:"Крайний срок утверждения полугодового уточнения за 1 полугодие",who:"Орган утверждения; в течение 20 рабочих дней со дня внесения",p:"п. 37"},
+ {m:9,d:1,cls:"rep",what:"Крайний срок внесения отчёта с аудитом (15 рабочих дней после утверждения аудированной отчётности)",who:"Исполнительный орган; утверждение — 10 рабочих дней",p:"п. 43, 46"},
+ {m:9,d:1,cls:"",what:"Цели, задачи и КПД от уполномоченного органа отрасли на планируемый период",who:"Орган управления → организация",p:"п. 3"},
+ {m:10,d:1,cls:"",what:"Цели, задачи и КПД от местного исполнительного органа",who:"МИО → организация",p:"п. 4"},
+ {m:10,d:10,cls:"mon",what:"Отчёт о результатах мониторинга реализации планов развития за прошлый год",who:"Орган управления",p:"п. 52"},
+ {m:11,d:20,cls:"",what:"Проект плана развития на пятилетку / ежегодного уточнения — органу утверждения",who:"Исполнительный орган; вместе с расчётами по прил. 16–29",p:"п. 16, 28"},
+ {m:12,d:1,cls:"mon",what:"Оценка реализации плана развития за прошлый год",who:"Совет директоров / наблюдательный совет",p:"п. 58–59"},
+ {m:12,d:25,cls:"",what:"Утверждение плана развития, ежегодного уточнения, полугодового уточнения за 2 полугодие",who:"Орган утверждения",p:"п. 19, 31, 37"},
+];
+const QUARTERLY = "Прил. 30–31 — до 10 числа месяца, следующего за кварталом (10 января, 10 апреля, 10 июля, 10 октября), п. 50";
+
+const CHECKS = [
+ {g:"Баланс и капитал",items:[
+  {t:"Актив = пассив в каждом году",d:"Прил. 6, 16, 17. Расхождение ровно на сумму НМА или дочерних организаций — типовая ошибка сведения.",f:"прил. 6 / 16 / 17"},
+  {t:"Нераспределённый доход на конец года = на начало + чистая прибыль − дивиденды − резервы",d:"Прил. 17 против прил. 6. Для НАО и ГП без распределения — прирост равен чистой прибыли.",f:"прил. 6 / 17"},
+  {t:"Балансовая стоимость ОС и НМА = первоначальная − накопленная амортизация − обесценение; амортизация не убывает без выбытий",d:"Прирост накопленной амортизации за год ≈ начисленной по прил. 26 + 27.",f:"прил. 16 / 26 / 27"},
+  {t:"Входящие остатки планового года взяты из факта отчётного года",d:"Деньги, нераспределённый доход, активы. При ежегодном уточнении — заменить плановые остатки фактическими.",f:"прил. 6 / 8 / 16 / 17"}
+ ]},
+ {g:"Деньги",items:[
+  {t:"Сальдо на конец года = сальдо на начало следующего",d:"Прил. 8 и 20 по всей цепочке лет.",f:"прил. 8 / 20"},
+  {t:"Начало + поступления − выбытия = конец",d:"В каждом году, прил. 8 и 20.",f:"прил. 8 / 20"},
+  {t:"Деньги в балансе = сальдо на конец года",d:"Прил. 16 строка «Деньги и их эквиваленты» против прил. 8.",f:"прил. 8 / 16"},
+  {t:"Транзитные поступления и выбытия заполнены на все годы и сбалансированы",d:"Стипендии, социальные выплаты и т.п.",f:"прил. 20"}
+ ]},
+ {g:"Доходы, расходы, прибыль",items:[
+  {t:"Доходы − расходы = прибыль до налогообложения; чистая прибыль учитывает КПН",d:"Прил. 6, 7, 10.",f:"прил. 6 / 7 / 10"},
+  {t:"Итог прил. 7 = итог прил. 19; итог прил. 10 = прил. 24 + 27 + 28 + 29",d:"Себестоимость = прил. 24, административные = прил. 27, вознаграждения = прил. 28, прочие = прил. 29.",f:"прил. 7 / 10 / 19 / 24–29"},
+  {t:"Количество × цена (прил. 5) ≈ доходы от реализации по продуктам (прил. 19)",d:"И количество × себестоимость ≈ прил. 23 / 24.",f:"прил. 5 / 19 / 23 / 24"},
+  {t:"Бюджетные договоры: прил. 9 = прил. 21 = строки «госорганам» в прил. 19 / 20",d:"С перечнем договоров, а не только итогами.",f:"прил. 9 / 19 / 20 / 21"}
+ ]},
+ {g:"Персонал и ФОТ",items:[
+  {t:"ФОТ: прил. 6 = прил. 18 = сумма оплаты труда по прил. 24 + 25 + 26 + 27 + 29",d:"По категориям персонала.",f:"прил. 6 / 18 / 24–29"},
+  {t:"Выплаты по оплате труда (прил. 20) = ФОТ − ИПН − ОПВ − ВОСМС",d:"Налоги и отчисления в прил. 20 равны сумме по прил. 24–27.",f:"прил. 18 / 20 / 24–27"},
+  {t:"Ставки ОПВР, СО, ОСМС, соцналога соответствуют каждому году",d:"ОПВР растёт по графику Социального кодекса; дальние годы не должны считаться по ставке первого года.",f:"прил. 20 / 24–27"},
+  {t:"Численность, ФОТ и вакансии согласованы с КПД",d:"Рост контингента / объёмов в прил. 4 отражён в прил. 18; вакантные единицы объяснены (п. 34).",f:"прил. 4 / 6 / 18"}
+ ]},
+ {g:"Инвестиции и дополнительные показатели",items:[
+  {t:"Итог прил. 11 = прил. 22; проекты из КПД (прил. 4) присутствуют в прил. 11 с источником",d:"Даты начала / завершения, освоено, предстоит — заполнены.",f:"прил. 4 / 11 / 22"},
+  {t:"Сумма закупок планового года сведена с планом закупок; разница объяснена",d:"Коммунальные услуги, закупки вне плана, переходящие договоры.",f:"прил. 22"},
+  {t:"Субсидии в прил. 7 / 8 отражены как источник в прил. 11",d:"Не всё — «собственные средства».",f:"прил. 7 / 8 / 11"},
+  {t:"Прил. 13 = пояснительная записка (площадь, авто, штат АУП)",d:"",f:"прил. 13"},
+  {t:"Прил. 14 ↔ финансовые обязательства прил. 17; прил. 15 ↔ доходы по вознаграждениям прил. 7 и факт прил. 31",d:"",f:"прил. 7 / 14 / 15 / 17 / 31"}
+ ]},
+ {g:"Цели и записка",items:[
+  {t:"Цели пронумерованы, каждая привязана к цели органа управления и имеет конечный показатель",d:"Задачи — сквозная нумерация, прил. 5 ссылается на те же номера.",f:"прил. 4 / 5"},
+  {t:"У каждого КПД — методика, единица измерения, значения на все годы; устаревшие показатели удалены",d:"",f:"прил. 4"},
+  {t:"Пояснительная записка обосновывает плановые значения по каждому приложению и каждое уточнение",d:"Методика, допущения, причины отклонений факта, основание уточнения по п. 34.",f:"п. 13, 37"},
+  {t:"Реквизиты решения органа утверждения, ЭЦП, PDF решения — готовы к направлению оператору",d:"Иначе отказ по п. 24 / 33 / 48.",f:"п. 23, 32, 38, 47"}
+ ]}
+];
+
+const FAQ = [
+ {q:"Кто утверждает план развития и отчёт?",a:"Для АО — совет директоров, для ТОО и ГП на праве хозяйственного ведения — наблюдательный совет; если наблюдательного совета нет, для ТОО и ГП — уполномоченный орган отрасли или местный исполнительный орган (п. 11). ГП с наблюдательным советом дополнительно направляют проект в наблюдательный совет за заключением: до 1 октября (план) и получают заключение до 25 октября (п. 17), при ежегодном уточнении — до 1 и 20 октября (п. 29)."},
+ {q:"Чем ежегодное уточнение отличается от полугодового?",a:"Ежегодное уточнение (п. 25–33) делается со второго года пятилетки на очередной плановый год: проект органу утверждения до 20 ноября, утверждение до 25 декабря; в год утверждения новой пятилетки оно не требуется (п. 20). Полугодовое уточнение (п. 34–39) меняет текущий год и допускается только по основаниям п. 34: изменение или переутверждение плана развития госоргана / региона, выделение или сокращение бюджетных средств и бюджетное кредитование, наличие вакантных штатных единиц, принятие или изменение НПА, влияющих на показатели. Не более двух раз в полугодие (п. 35); утверждение в течение 20 рабочих дней, но не позднее 25 июня и 25 декабря (п. 37)."},
+ {q:"Можно ли уточнить показатели прошлых лет или ключевые показатели?",a:"Годы, предшествующие плановому, отражаются как факт / оценка и не корректируются. Ключевые показатели деятельности исходят из целей органа управления (п. 3–7); их изменение обосновывается изменением этих целей, о котором орган управления сообщает в течение 15 рабочих дней. Уточнение КПД «под факт» без такого основания при мониторинге будет выглядеть как недостижение первоначального плана."},
+ {q:"Что должна содержать пояснительная записка?",a:"К плану — обоснование показателей на весь пятилетний период и обоснования и пояснения к каждому приложению (п. 13). К полугодовому уточнению — обоснование и пояснение каждого внесённого уточнения по каждому приложению (п. 37); при сокращении вакантных единиц — информацию о сокращении и о ФОТ. К отчёту — причины отклонений факта от плана: орган управления при мониторинге анализирует запланированные и достигнутые КПД и причины недостижения (п. 54). Практический минимум: методика расчёта, источники данных, допущения по годам, причины отклонений более ±10%, основание уточнения."},
+ {q:"Нужно ли утверждать расчёты по приложениям 16–29?",a:"Нет. Расчёты носят исключительно информативный характер и не являются предметом утверждения; они представляются вместе с проектом плана и отчёта (п. 16, 43). Исполнительный орган корректирует их самостоятельно в рамках утверждённых агрегированных показателей на портале, подписывая ЭЦП на основании собственного решения (п. 16) — для этого в формах есть графы «Корректировка в апреле / августе / декабре». Но именно расчёты обосновывают агрегаты перед органом утверждения, поэтому их увязка проверяется так же строго."},
+ {q:"Какие сроки у отчёта об исполнении?",a:"Отчёт разрабатывается ежегодно по итогам финансового года на веб-портале (п. 40). Без аудита — органу утверждения не позднее 15 апреля, утверждение не позднее 1 июня (п. 43, 46). С аудитом — в течение 15 рабочих дней после утверждения аудированной финансовой отчётности, но не позднее 1 сентября; утверждение в течение 10 рабочих дней (п. 43, 46). Если аудированной отчётности нет до 30 апреля — отчёт по оперативным данным: подразделение готовит до 10 мая, утверждает исполнительный орган, направление оператору до 1 июня (п. 49). Организации с бюджетным финансированием дополнительно направляют проект отчёта администратору бюджетных программ до 1 февраля (п. 41)."},
+ {q:"Как документ попадает в реестр и почему оператор может отказать?",a:"После утверждения организация подписывает документ ЭЦП и направляет единому оператору через веб-портал реестра с прикреплённым сканированным решением органа утверждения в PDF с указанием идентификатора: план и уточнения — в течение 5 рабочих дней, отчёт — 2 рабочих дней (п. 23, 32, 38, 47). Оператор отвечает в 5 (2) рабочих дней. Отказ только по двум основаниям: нет прикреплённого решения или ЭЦП не принадлежит организации (п. 24, 33, 48); замечания устраняются в 5 (2) рабочих дней."},
+ {q:"Что такое показатели прямого, конечного результата и качества?",a:"Показатель прямого результата — количественная характеристика объёма реализованных продуктов (например, численность обучающихся, количество проектов). Показатель конечного результата — итог, эффект от достижения цели (например, доля трудоустроенных выпускников); он один на цель организации и вытекает из целей органа управления. Показатель качества — степень соответствия продукта требованиям и ожиданиям потребителей (п. 2). В прил. 4 каждому показателю нужны методика (формула) расчёта и единица измерения."},
+ {q:"Как вести годы 3–5 пятилетки, если бюджетные лимиты известны только на ближайший год?",a:"Пункт 14 требует показателей с разбивкой по каждому году. Дальние годы — прогноз на основе доведённых целей, тенденции отчётного года, индексации оплаты труда и тарифов, графика ставок социальных платежей и инвестиционных планов. Копирование первого года в дальние — самая частая причина расхождений (амортизация, налоги, остатки). При ежегодном уточнении очередной год перепланируется по лимитам администратора бюджетных программ (п. 26), остальные годы — актуализируются."},
+ {q:"Что делать с вакантными штатными единицами?",a:"Наличие вакантных штатных единиц — самостоятельное основание для полугодового уточнения (п. 34). При внесении уточнения по этому основанию прилагается информация о сокращении вакантных единиц и о фонде оплаты труда (п. 37). В прил. 18 сокращение отражается в строках «Оптимизация рабочих мест» и в численности по штату; в прил. 6 — в ФОТ."},
+ {q:"Что происходит после сдачи отчёта?",a:"Орган управления проводит мониторинг на основе утверждённых планов и отчётов, формируя отчёт о результатах не позднее 10 октября (п. 52); критерии — плановые и достигнутые КПД и причины недостижения, финансовая устойчивость, отклонения факта от плана с причинами (п. 54). Совет директоров / наблюдательный совет проводит оценку реализации плана до 1 декабря (п. 58–60). Оба документа хранятся оператором на портале (п. 8)."},
+ {q:"На кого Правила не распространяются?",a:"На национальные управляющие холдинги, национальные холдинги, национальные компании, а также на АО, ТОО и ГП, акционером (участником, доверительным управляющим) которых является Национальный Банк РК (п. 1). Для них действуют отдельные правила (приказ МНЭ № 23 от 30.04.2025)."},
+ {q:"Как быть при чрезвычайном положении или форс-мажоре?",a:"Пункт 9 предусматривает приостановление сроков при введении чрезвычайного положения и возможность уточнения плана решением исполнительного органа, если обстоятельства влияют на производственные показатели. Основание и решение прикладываются к уточнению."},
+ {q:"Организация создана посреди года — когда нужен план?",a:"Орган управления в течение 10 рабочих дней после госрегистрации направляет цели, задачи и КПД (п. 21); исполнительный орган в течение 20 рабочих дней разрабатывает план на пятилетний период и направляет органу утверждения, который рассматривает его 10 рабочих дней (п. 22)."}
+];
+
+/* ---------- helpers ---------- */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KIND = {appr:["appr","Утверждается"],calc:["calc","Расчёт"],q:["q","Квартально / мониторинг"]};
+const ls = {get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* tabs */
+let views = ["home","struct","time","check","audit","faq"];
+function show(v){
+  views.forEach(x=>{$("#v-"+x).hidden = x!==v});
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.v===v?"true":"false"));
+  ls.set("pr.tab",v); window.scrollTo({top:0});
+}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.v)));
+
+/* structure */
+let filt="all";
+function renderApps(){
+  const q=($("#q-struct").value||"").trim().toLowerCase();
+  const box=$("#applist"); box.innerHTML="";
+  APPS.filter(a=>(filt==="all"||a.k===filt) && (!q || (a.t+" "+a.what.join(" ")+" "+a.err.join(" ")+" "+(a.note||"")).toLowerCase().includes(q)))
+  .forEach(a=>{
+    const d=document.createElement("details"); d.className="app"; d.id="app-"+a.n;
+    d.innerHTML=`<summary><div class="no"><small>ПРИЛ.</small>${a.n}</div><div><div class="ttl">${esc(a.t)}</div><div class="sub">${esc(a.p)}</div></div><span class="pill ${KIND[a.k][0]}">${KIND[a.k][1]}</span></summary>
+    <div class="body"><div><h4>Что заполняется</h4><ul>${a.what.map(w=>`<li>${esc(w)}</li>`).join("")}</ul></div>
+    ${a.err.length?`<div><h4>Где ошибаются</h4><ul>${a.err.map(w=>`<li>${esc(w)}</li>`).join("")}</ul></div>`:""}
+    ${a.note?`<div class="full">${esc(a.note)}</div>`:""}</div>`;
+    box.appendChild(d);
+  });
+  if(!box.children.length) box.innerHTML='<p class="small">Ничего не найдено — попробуйте другое слово.</p>';
+}
+$("#q-struct").addEventListener("input",renderApps);
+document.querySelectorAll(".chip[data-f]").forEach(c=>c.addEventListener("click",()=>{filt=c.dataset.f;document.querySelectorAll(".chip[data-f]").forEach(x=>x.setAttribute("aria-pressed",x===c?"true":"false"));renderApps()}));
+
+/* timeline */
+const MONTHS=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+function renderTL(){
+  const ul=$("#tl"); ul.innerHTML="";
+  TL.forEach(e=>{const li=document.createElement("li"); li.className=e.cls;
+    li.innerHTML=`<div class="when">до ${e.d} ${MONTHS[e.m-1]} <span class="pt">${esc(e.p)}</span></div><div class="what">${esc(e.what)}</div><div class="who">${esc(e.who)}</div>`; ul.appendChild(li)});
+  const li=document.createElement("li"); li.className="mon"; li.innerHTML=`<div class="when">ежеквартально</div><div class="what">${esc(QUARTERLY)}</div>`; ul.appendChild(li);
+  const now=new Date(); const y=now.getFullYear();
+  const items=[];
+  TL.forEach(e=>{[y,y+1].forEach(yy=>{const dt=new Date(yy,e.m-1,e.d); if(dt>=new Date(now.getFullYear(),now.getMonth(),now.getDate())) items.push({dt,what:e.what,p:e.p})})});
+  [[0,10],[3,10],[6,10],[9,10]].forEach(([m,d])=>{[y,y+1].forEach(yy=>{const dt=new Date(yy,m,d); if(dt>=now) items.push({dt,what:"Квартальная информация о заимствованиях и размещении денег (прил. 30–31)",p:"п. 50"})})});
+  items.sort((a,b)=>a.dt-b.dt);
+  const days=d=>Math.round((d-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/86400000);
+  $("#now").innerHTML=`<div class="eyebrow">Ближайшие сроки</div><div class="date">сегодня ${now.getDate()} ${MONTHS[now.getMonth()]} ${y}</div><ol>${items.slice(0,5).map(i=>`<li><b>${i.dt.getDate()} ${MONTHS[i.dt.getMonth()]}</b> — ${esc(i.what)} <span class="pt">${esc(i.p)} · через ${days(i.dt)} дн.</span></li>`).join("")}</ol>`;
+}
+
+/* checks */
+let done=ls.get("pr.checks",{});
+function renderChecks(){
+  const box=$("#checks"); box.innerHTML=""; let n=0,k=0;
+  CHECKS.forEach((g,gi)=>{const h=document.createElement("h2"); h.className="grp"; h.textContent=g.g; box.appendChild(h);
+    g.items.forEach((it,ii)=>{const id=`c${gi}_${ii}`; n++; const on=!!done[id]; if(on)k++;
+      const div=document.createElement("div"); div.className="ck"+(on?" done":"");
+      div.innerHTML=`<input type="checkbox" id="${id}" ${on?"checked":""}><label for="${id}"><div class="t">${esc(it.t)}</div>${it.d?`<div class="d">${esc(it.d)}</div>`:""}<div class="f">${esc(it.f)}</div></label>`;
+      div.querySelector("input").addEventListener("change",ev=>{done[id]=ev.target.checked; ls.set("pr.checks",done); renderChecks()});
+      box.appendChild(div)});
+  });
+  $("#progtxt").textContent=`${k} из ${n} проверок отмечено`; $("#progbar").style.width=(n?100*k/n:0)+"%";
+}
+$("#reset").addEventListener("click",()=>{done={}; ls.set("pr.checks",done); renderChecks()});
+
+/* faq */
+function renderFAQ(){
+  const q=($("#q-faq").value||"").trim().toLowerCase(); const box=$("#faqlist"); box.innerHTML="";
+  FAQ.filter(f=>!q||(f.q+" "+f.a).toLowerCase().includes(q)).forEach(f=>{const d=document.createElement("details"); d.className="faq"; if(q) d.open=true;
+    d.innerHTML=`<summary>${esc(f.q)}</summary><div class="a"><p>${esc(f.a)}</p></div>`; box.appendChild(d)});
+  if(!box.children.length) box.innerHTML='<p class="small">По этому запросу вопросов нет.</p>';
+}
+$("#q-faq").addEventListener("input",renderFAQ);
+
+/* audit UI */
+const SEV={crit:["crit","Критично"],warn:["warn","Замечание"],info:["info","На заметку"],ok:["ok","В порядке"]};
+function gridFromWorkbook(wb){const g={};wb.SheetNames.forEach(n=>{g[n]=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:true,defval:null})});return g}
+function runAudit(file){
+  const out=$("#audit-out"); out.innerHTML='<p class="small">Читаю файл…</p>';
+  const rd=new FileReader(); rd.onload=e=>{ try{
+    const wb=XLSX.read(new Uint8Array(e.target.result),{type:"array"}); const res=window.PRAudit.analyze(gridFromWorkbook(wb)); renderAudit(res,file.name);
+  }catch(err){ out.innerHTML=`<div class="find crit"><div class="h"><b>Не удалось прочитать файл</b></div><p>${esc(err.message||err)}. Нужна выгрузка с портала в формате .xls или .xlsx.</p></div>` } };
+  rd.readAsArrayBuffer(file);
+}
+function renderAudit(res,fname){
+  const out=$("#audit-out"); const F=res.findings, m=res.meta; const cnt=s=>F.filter(f=>f.sev===s).length;
+  const head=`<div class="meta">${esc(fname)}${m.org?" · "+esc(m.org):""}${m.period?" · "+esc(m.period):""}${m.years&&m.years.length?" · годы "+m.years[0]+"–"+m.years[m.years.length-1]:""}${m.reportYear?" · отчётный "+m.reportYear:""}</div>`;
+  const sum=`<div class="sum"><div class="s crit"><b>${cnt("crit")}</b><span>критичных</span></div><div class="s warn"><b>${cnt("warn")}</b><span>замечаний</span></div><div class="s info"><b>${cnt("info")}</b><span>на заметку</span></div><div class="s ok"><b>${cnt("ok")}</b><span>проверок пройдено</span></div></div>`;
+  const verdict=cnt("crit")?`<p class="lead">Документ в текущем виде вносить на орган утверждения нельзя: есть ${cnt("crit")} критичных расхождений, которые орган утверждения и мониторинг увидят первыми.</p>`:cnt("warn")?`<p class="lead">Критичных расхождений нет; ${cnt("warn")} замечаний стоит закрыть до внесения.</p>`:`<p class="lead">Проверки увязки пройдены. Остаётся содержательная часть: обоснования в записке и связь КПД с ресурсами.</p>`;
+  const list=F.map(f=>`<div class="find ${SEV[f.sev][0]}"><div class="h"><span class="pill ${SEV[f.sev][0]}">${SEV[f.sev][1]}</span><span class="pt">${esc(f.app)}</span><b>${esc(f.title)}</b></div>${f.text?`<p>${esc(f.text)}</p>`:""}${f.fix?`<div class="fx">${esc(f.fix)}</div>`:""}</div>`).join("");
+  out.innerHTML=head+sum+verdict+`<div class="actions"><button class="chip" id="copy">Скопировать замечания текстом</button></div>`+list;
+  $("#copy").addEventListener("click",()=>{const t=F.filter(f=>f.sev!=="ok").map((f,i)=>`${i+1}. [${SEV[f.sev][1]}, ${f.app}] ${f.title}. ${f.text||""}${f.fix?" Как исправить: "+f.fix:""}`).join("\n\n");
+    navigator.clipboard&&navigator.clipboard.writeText(t).then(()=>{$("#copy").textContent="Скопировано"; setTimeout(()=>$("#copy").textContent="Скопировать замечания текстом",1500)}).catch(()=>{});});
+  window.scrollTo({top:$("#audit-out").offsetTop-80,behavior:"smooth"});
+}
+$("#pick").addEventListener("click",()=>$("#file").click());
+$("#file").addEventListener("change",e=>{if(e.target.files[0])runAudit(e.target.files[0])});
+const dz=$("#drop"); ["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("over")}));
+["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("over")}));
+dz.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f)runAudit(f)});
+
+renderApps(); renderTL(); renderChecks(); renderFAQ();
+show(ls.get("pr.tab","home"));
+</script>
+
+</body>
+</html>
